@@ -2,6 +2,8 @@ package com.greenfox.lica.chucknorris;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import retrofit2.Call;
@@ -13,13 +15,31 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button button;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView textView = findViewById(R.id.textChuck);
+        textView = findViewById(R.id.textChuck);
+        final Button button = findViewById(R.id.button);
+
+        getChuck();
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                getChuck();
+            }
+        });
+
+
+    }
+
+    private void getChuck() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ChuckApi.BASE_URL)
@@ -48,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
+
         });
 
     }
+
 
 }
